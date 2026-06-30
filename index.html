@@ -24,6 +24,8 @@ overflow-x:hidden;
 
 .background{
 position:fixed;
+top: 0;
+left: 0;
 width:100%;
 height:100%;
 z-index:-2;
@@ -31,24 +33,25 @@ z-index:-2;
 
 .photo{
 position:absolute;
+top: 0;
+left: 0;
 width:100%;
 height:100%;
 background-size:cover;
 background-position:center;
 opacity:0;
-/* 48s loop splits into 6 seconds per image for all 8 pictures */
 animation:slides 48s infinite;
 }
 
-/* Keeps capital .JPEG to match Git's server cache history */
-.photo:nth-child(1){ background-image:url("images/photo1.JPEG"); animation-delay: 0s; }
-.photo:nth-child(2){ background-image:url("images/photo2.JPEG"); animation-delay: 6s; }
-.photo:nth-child(3){ background-image:url("images/photo3.JPEG"); animation-delay: 12s; }
-.photo:nth-child(4){ background-image:url("images/photo4.JPEG"); animation-delay: 18s; }
-.photo:nth-child(5){ background-image:url("images/photo5.JPEG"); animation-delay: 24s; }
-.photo:nth-child(6){ background-image:url("images/photo6.JPEG"); animation-delay: 30s; }
-.photo:nth-child(7){ background-image:url("images/photo7.JPEG"); animation-delay: 36s; }
-.photo:nth-child(8){ background-image:url("images/photo8.JPEG"); animation-delay: 42s; }
+/* Using .jpeg extensions to match Windows JPEG File system hidden outputs */
+.photo:nth-child(1){ background-image:url("images/photo1.jpeg"); animation-delay: 0s; }
+.photo:nth-child(2){ background-image:url("images/photo2.jpeg"); animation-delay: 6s; }
+.photo:nth-child(3){ background-image:url("images/photo3.jpeg"); animation-delay: 12s; }
+.photo:nth-child(4){ background-image:url("images/photo4.jpeg"); animation-delay: 18s; }
+.photo:nth-child(5){ background-image:url("images/photo5.jpeg"); animation-delay: 24s; }
+.photo:nth-child(6){ background-image:url("images/photo6.jpeg"); animation-delay: 30s; }
+.photo:nth-child(7){ background-image:url("images/photo7.jpeg"); animation-delay: 36s; }
+.photo:nth-child(8){ background-image:url("images/photo8.jpeg"); animation-delay: 42s; }
 
 @keyframes slides{
 0%{
@@ -69,6 +72,8 @@ opacity:0;
 
 .overlay{
 position:fixed;
+top: 0;
+left: 0;
 width:100%;
 height:100%;
 background:rgba(0,0,0,.6);
@@ -119,13 +124,24 @@ position:fixed;
 bottom:30px;
 left:50%;
 transform:translateX(-50%);
-z-index: 10;
+z-index: 100;
+text-align: center;
+}
+
+.playback-btn {
+background: rgba(255, 255, 255, 0.2);
+backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+padding: 10px 25px;
+margin: 0 5px;
+box-shadow: none;
 }
 
 .heart{
 position:fixed;
+top: -20px;
 animation:fall 8s linear infinite;
-z-index: 5; 
+z-index: 50; 
 pointer-events: none; 
 }
 
@@ -138,17 +154,31 @@ transform:translateY(100vh);
 }
 }
 
-/* Combined row styling for text and timer */
+/* Layout styles for totals and standard clock metrics */
 .timer-card {
 text-align: center;
-font-size: 20px;
+font-size: 18px;
 font-weight: 500;
-letter-spacing: 0.5px;
+line-height: 1.8;
 }
-#counter {
+.totals-list {
+margin-bottom: 15px;
+font-size: 16px;
+opacity: 0.95;
+text-align: left;
 display: inline-block;
-margin-left: 10px;
-font-variant-numeric: tabular-nums; /* Prevents text shifting as numbers count up */
+}
+.live-ticker {
+font-size: 22px;
+margin-top: 10px;
+border-top: 1px solid rgba(255, 255, 255, 0.2);
+padding-top: 10px;
+font-weight: bold;
+}
+.num-val {
+font-variant-numeric: tabular-nums;
+color: #ff4f81;
+font-weight: bold;
 }
 </style>
 </head>
@@ -176,6 +206,11 @@ font-variant-numeric: tabular-nums; /* Prevents text shifting as numbers count u
 <button id="startBtn" onclick="startEverything()">
 ❤️ Start
 </button>
+
+<div id="playbackControls" style="display: none;">
+<button class="playback-btn" onclick="pauseMusic()">⏸️ Pause</button>
+<button class="playback-btn" onclick="playMusic()">▶️ Resume</button>
+</div>
 </div>
 
 <div class="container">
@@ -185,9 +220,17 @@ font-variant-numeric: tabular-nums; /* Prevents text shifting as numbers count u
 <div id="letter"></div>
 </div>
 
-<!-- Updated Timer Card sitting inline -->
+<!-- Multi-tier counter tracking absolute totals alongside the standard ticker dashboard layout -->
 <div class="card timer-card">
-Forever and Always ❤️ <span id="counter">00 : 00 : 00 : 00</span>
+<div class="totals-list">
+every day <span id="totalDays" class="num-val">0</span><br>
+every hour <span id="totalHours" class="num-val">0</span><br>
+every minute <span id="totalMinutes" class="num-val">0</span><br>
+every second <span id="totalSeconds" class="num-val">0</span>
+</div>
+<div class="live-ticker">
+Forever and Always ❤️ <span id="counter" class="num-val">00 : 00 : 00 : 00</span>
+</div>
 </div>
 </div>
 
@@ -204,6 +247,8 @@ if (started) return;
 started = true;
 
 document.getElementById("startBtn").style.display = "none";
+document.getElementById("playbackControls").style.display = "block";
+
 document.getElementById("music").play();
 type();
 
@@ -226,24 +271,37 @@ setTimeout(type, 75);
 }
 }
 
-// Live Countdown calculation running from 05 January 2025
+// Live Countdown loop tracking benchmarks relative to Jan 5, 2025
 const startDate = new Date("January 5, 2025 00:00:00").getTime();
 
 function updateTimer() {
 const now = new Date().getTime();
 const difference = now - startDate;
 
-const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+// Calculating absolute raw totals for individual milestones
+const absoluteSeconds = Math.floor(difference / 1000);
+const absoluteMinutes = Math.floor(difference / (1000 * 60));
+const absoluteHours = Math.floor(difference / (1000 * 60 * 60));
+const absoluteDays = Math.floor(difference / (1000 * 60 * 60 * 24));
+
+// Traditional clock breakdown for the bottom ticker dashboard
+const days = absoluteDays;
 const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
 const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-// Pads single digit values with a leading zero for alignment consistency
 const dStr = days.toString().padStart(2, '0');
 const hStr = hours.toString().padStart(2, '0');
 const mStr = minutes.toString().padStart(2, '0');
 const sStr = seconds.toString().padStart(2, '0');
 
+// Injecting total raw data counts into layout fields
+document.getElementById("totalDays").innerText = absoluteDays.toLocaleString();
+document.getElementById("totalHours").innerText = absoluteHours.toLocaleString();
+document.getElementById("totalMinutes").innerText = absoluteMinutes.toLocaleString();
+document.getElementById("totalSeconds").innerText = absoluteSeconds.toLocaleString();
+
+// Injecting clock countdown data to display row string
 document.getElementById("counter").innerHTML = `${dStr} : ${hStr} : ${mStr} : ${sStr}`;
 }
 
