@@ -43,7 +43,7 @@ opacity:0;
 animation:slides 48s infinite;
 }
 
-/* Using .jpeg extensions to match Windows JPEG File system hidden outputs */
+/* Lowercase .jpeg extensions match your unhidden Windows file parameters */
 .photo:nth-child(1){ background-image:url("images/photo1.jpeg"); animation-delay: 0s; }
 .photo:nth-child(2){ background-image:url("images/photo2.jpeg"); animation-delay: 6s; }
 .photo:nth-child(3){ background-image:url("images/photo3.jpeg"); animation-delay: 12s; }
@@ -126,6 +126,8 @@ left:50%;
 transform:translateX(-50%);
 z-index: 100;
 text-align: center;
+width: 100%;
+max-width: 400px;
 }
 
 .playback-btn {
@@ -135,6 +137,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 padding: 10px 25px;
 margin: 0 5px;
 box-shadow: none;
+display: inline-block;
 }
 
 .heart{
@@ -154,7 +157,7 @@ transform:translateY(100vh);
 }
 }
 
-/* Layout styles for totals and standard clock metrics */
+/* Timer layout configuration */
 .timer-card {
 text-align: center;
 font-size: 18px;
@@ -220,7 +223,6 @@ font-weight: bold;
 <div id="letter"></div>
 </div>
 
-<!-- Multi-tier counter tracking absolute totals alongside the standard ticker dashboard layout -->
 <div class="card timer-card">
 <div class="totals-list">
 every day <span id="totalDays" class="num-val">0</span><br>
@@ -246,12 +248,14 @@ function startEverything() {
 if (started) return; 
 started = true;
 
+// Swapping control interfaces smoothly
 document.getElementById("startBtn").style.display = "none";
 document.getElementById("playbackControls").style.display = "block";
 
 document.getElementById("music").play();
 type();
 
+// Spawning hearts securely over background layers
 for(let i=0; i<50; i++){
 let heart = document.createElement("div");
 heart.className = "heart";
@@ -271,20 +275,28 @@ setTimeout(type, 75);
 }
 }
 
-// Live Countdown loop tracking benchmarks relative to Jan 5, 2025
+function playMusic(){
+document.getElementById("music").play();
+}
+
+function pauseMusic(){
+document.getElementById("music").pause();
+}
+
+// Live calculation engine anchored to Jan 5, 2025
 const startDate = new Date("January 5, 2025 00:00:00").getTime();
 
 function updateTimer() {
 const now = new Date().getTime();
 const difference = now - startDate;
 
-// Calculating absolute raw totals for individual milestones
+// Mathematical parsing of raw total time elapsed
 const absoluteSeconds = Math.floor(difference / 1000);
 const absoluteMinutes = Math.floor(difference / (1000 * 60));
 const absoluteHours = Math.floor(difference / (1000 * 60 * 60));
 const absoluteDays = Math.floor(difference / (1000 * 60 * 60 * 24));
 
-// Traditional clock breakdown for the bottom ticker dashboard
+// Mathematical breakdown for live system clock presentation layout string
 const days = absoluteDays;
 const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
@@ -295,16 +307,16 @@ const hStr = hours.toString().padStart(2, '0');
 const mStr = minutes.toString().padStart(2, '0');
 const sStr = seconds.toString().padStart(2, '0');
 
-// Injecting total raw data counts into layout fields
-document.getElementById("totalDays").innerText = absoluteDays.toLocaleString();
-document.getElementById("totalHours").innerText = absoluteHours.toLocaleString();
-document.getElementById("totalMinutes").innerText = absoluteMinutes.toLocaleString();
-document.getElementById("totalSeconds").innerText = absoluteSeconds.toLocaleString();
+// Safely rendering numbers onto dashboard nodes
+if(document.getElementById("totalDays")) document.getElementById("totalDays").innerText = absoluteDays.toLocaleString();
+if(document.getElementById("totalHours")) document.getElementById("totalHours").innerText = absoluteHours.toLocaleString();
+if(document.getElementById("totalMinutes")) document.getElementById("totalMinutes").innerText = absoluteMinutes.toLocaleString();
+if(document.getElementById("totalSeconds")) document.getElementById("totalSeconds").innerText = absoluteSeconds.toLocaleString();
 
-// Injecting clock countdown data to display row string
-document.getElementById("counter").innerHTML = `${dStr} : ${hStr} : ${mStr} : ${sStr}`;
+if(document.getElementById("counter")) document.getElementById("counter").innerHTML = `${dStr} : ${hStr} : ${mStr} : ${sStr}`;
 }
 
+// Initializing real-time engine
 setInterval(updateTimer, 1000);
 updateTimer();
 </script>
