@@ -123,6 +123,131 @@ z-index: 100;
 text-align: center;
 width: 100%;
 max-width: 400px;
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>To my Lotus Lilly ❤️</title>
+
+<link href="https://googleapis.com" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:black;
+color:white;
+font-family:Poppins;
+overflow-x:hidden;
+}
+
+.background{
+position:fixed;
+width:100%;
+height:100%;
+z-index:-2;
+}
+
+.photo{
+position:absolute;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+opacity:0;
+/* 48s loop splits into 6 seconds per image for all 8 pictures */
+animation:slides 48s infinite;
+}
+
+/* Original uppercase .JPEG paths that match your server files */
+.photo:nth-child(1){ background-image:url("images/photo1.JPEG"); animation-delay: 0s; }
+.photo:nth-child(2){ background-image:url("images/photo2.JPEG"); animation-delay: 6s; }
+.photo:nth-child(3){ background-image:url("images/photo3.JPEG"); animation-delay: 12s; }
+.photo:nth-child(4){ background-image:url("images/photo4.JPEG"); animation-delay: 18s; }
+.photo:nth-child(5){ background-image:url("images/photo5.JPEG"); animation-delay: 24s; }
+.photo:nth-child(6){ background-image:url("images/photo6.JPEG"); animation-delay: 30s; }
+.photo:nth-child(7){ background-image:url("images/photo7.JPEG"); animation-delay: 36s; }
+.photo:nth-child(8){ background-image:url("images/photo8.JPEG"); animation-delay: 42s; }
+
+@keyframes slides{
+0%{
+opacity:0;
+transform:scale(1.2);
+}
+4%, 16%{
+opacity:1;
+}
+20%{
+opacity:0;
+transform:scale(1);
+}
+100%{
+opacity:0;
+}
+}
+
+.overlay{
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.6);
+z-index:-1;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:80px 25px;
+}
+
+h1{
+font-family:"Great Vibes";
+font-size:80px;
+text-align:center;
+}
+
+.card{
+background:rgba(255,255,255,.15);
+padding:30px;
+border-radius:25px;
+margin:40px 0;
+backdrop-filter:blur(10px);
+line-height:2;
+white-space: pre-wrap;
+}
+
+button{
+background:#ff4f81;
+color:white;
+border:none;
+padding:14px 35px;
+border-radius:30px;
+cursor:pointer;
+font-size: 16px;
+font-weight: 500;
+box-shadow: 0 4px 15px rgba(255, 79, 129, 0.4);
+transition: transform 0.2s;
+}
+
+button:active {
+transform: scale(0.95);
+}
+
+.controls{
+position:fixed;
+bottom:30px;
+left:50%;
+transform:translateX(-50%);
+z-index: 1000; /* Forces buttons to sit above falling elements */
+text-align: center;
+width: 100%;
+max-width: 400px;
 }
 
 .playback-btn {
@@ -135,10 +260,12 @@ box-shadow: none;
 display: inline-block;
 }
 
+/* Brought to absolute foreground */
 .heart{
 position:fixed;
+top: -20px;
 animation:fall 8s linear infinite;
-z-index: 50; 
+z-index: 999; /* Higher layer to move ahead of card backgrounds */
 pointer-events: none; 
 }
 
@@ -151,7 +278,6 @@ transform:translateY(100vh);
 }
 }
 
-/* Timer layout configuration */
 .timer-card {
 text-align: center;
 font-size: 18px;
@@ -205,8 +331,8 @@ font-weight: bold;
 </button>
 
 <div id="playbackControls" style="display: none;">
-<button class="playback-btn" onclick="pauseMusic()">⏸️ Pause</button>
-<button class="playback-btn" onclick="playMusic()">▶️ Resume</button>
+<button class="playback-btn" onclick="togglePauseResume(true)">⏸️ Pause</button>
+<button class="playback-btn" onclick="togglePauseResume(false)">▶️ Resume</button>
 </div>
 </div>
 
@@ -232,11 +358,13 @@ Forever and Always ❤️ <span id="counter" class="num-val">00 : 00 : 00 : 00</
 
 <script>
 const message = `
-Life is short and seeing the shortness of it in effect I want to spend my time doing things that matter. One thing I’ll never regret is loving you. It’s something I wish to do for the rest of my days. I’ve told you this many times but I want to reiterate it sthandwa sam’, you make it do easy to love you. It’s something I don’t think about and something I do a kin to breathing. I feel completely myself when I’m with you. I feel no shame in being a soft boy making you blush and smile. I take pleasure in doing everything in my power to make you smile. Lerato I cannot remember a time when I didn’t love you. That’s foreign to me. You have blended beautifully into my life, completely and wholly. You are not the part of the furniture but the home in which I reside. It’s as if I fully experienced what God set aside to love a person when it comes to you. I understand what Adam felt when he opened his eyes, saw Eve and said “bone of my bone flesh of my flesh”. I understand what drove Jacob to work 7 years to get Rachel and another 7 once he had her. Likewise I'll do whatever it takes, joyfully, to keep the one my heart bleeds for. I experience the sweetness of life everytime you speak and my heart skips a beat with every glance you give me. I am in awe of you. You are more than my dreams could conjure. You’re not real. You’re a unicorn from the imagination of the Father. I will do whatever it takes, by His will,to keep you. You deserve the world. You are worth more than gold. I know you don’t ask for much but I renew my commitment to doing that to the best of my ability. Marriage is not the final goal. The goal is to spend eternity with you with our Father. I love you sthandwa. I loved you a year and six months ago. I love you today. I’ll love you for the rest of my days and eternity in paradise ♥️🌹♾️.
+Life is short and seeing the shortness of it in effect I want to spend my time doing things that matter. One thing I’ll never regret is loving you. It’s something I wish to do for the rest of my days. I’ve told you this many times but I want to reiterate it sthandwa sam’, you make it do easy to love you. It’s something I don’t think about and something I do a kin to breathing. I feel completely myself when I’m with you. I feel no shame in being a soft boy making you blush and smile. I take pleasure in doing everything in my power to make you smile. Lerato I cannot remember a time when I didn’t love you. That’s foreign to me. You have blended beautifully into my life, completely and wholly. You are not the part of the furniture but the home in which I reside. It’s as if I fully experienced what God set aside to love a person when it comes to you. I understand what Adam felt when he opened his eyes, saw Eve and said “bone of my bone flesh of my flesh”. I understand what drove Jacob to work 7 years to get Rachel and another 7 once he had her. Likewise I'll do whatever it takes, joyfully, to keep the one my heart bleeds for. I experience the sweetness of life everytime you speak and my heart skips a beat with every glance you give me. I am in awe of you. You are more than my dreams could conjure. You’re not real. You’re a unicorn from the imagination of the Father. I will do whatever it takes, by His will,to keep you. You deserve the world. You are worth more than gold. I know you don’t ask for much but I renew my commitment to doing that to the best of my ability. Marriage is not the final goal. The goal is to spend eternity with you with our father. I love you sthandwa. I loved you a year and six months ago. I love you today. I’ll love you for the rest of my days and eternity in paradise ♥️🌹♾️.
 `;
 
 let i = 0;
 let started = false;
+let isPaused = false;
+let typingTimeout = null;
 
 function startEverything() {
 if (started) return; 
@@ -248,7 +376,7 @@ document.getElementById("playbackControls").style.display = "block";
 document.getElementById("music").play();
 type();
 
-// Spawning hearts securely
+// Spawning foreground hearts
 for(let i=0; i<50; i++){
 let heart = document.createElement("div");
 heart.className = "heart";
@@ -261,19 +389,27 @@ document.body.appendChild(heart);
 }
 
 function type(){
+if (isPaused) return; // Halt script if paused
+
 if(i < message.length){
 document.getElementById("letter").innerHTML += message.charAt(i);
 i++;
-setTimeout(type, 75);
+typingTimeout = setTimeout(type, 75);
 }
 }
 
-function playMusic(){
-document.getElementById("music").play();
-}
+// Master synced media control function
+function togglePauseResume(shouldPause) {
+const music = document.getElementById("music");
+isPaused = shouldPause;
 
-function pauseMusic(){
-document.getElementById("music").pause();
+if (shouldPause) {
+music.pause();
+clearTimeout(typingTimeout); // Freezes text workflow loops instantly
+} else {
+music.play();
+type(); // Restarts text typing track cleanly
+}
 }
 
 // Live calculation engine anchored to Jan 5, 2025
@@ -283,13 +419,11 @@ function updateTimer() {
 const now = new Date().getTime();
 const difference = now - startDate;
 
-// Mathematical parsing of raw total time elapsed
 const absoluteSeconds = Math.floor(difference / 1000);
 const absoluteMinutes = Math.floor(difference / (1000 * 60));
 const absoluteHours = Math.floor(difference / (1000 * 60 * 60));
 const absoluteDays = Math.floor(difference / (1000 * 60 * 60 * 24));
 
-// Mathematical breakdown for live system clock presentation
 const days = absoluteDays;
 const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
@@ -300,7 +434,6 @@ const hStr = hours.toString().padStart(2, '0');
 const mStr = minutes.toString().padStart(2, '0');
 const sStr = seconds.toString().padStart(2, '0');
 
-// Safely rendering numbers onto dashboard nodes
 if(document.getElementById("totalDays")) document.getElementById("totalDays").innerText = absoluteDays.toLocaleString();
 if(document.getElementById("totalHours")) document.getElementById("totalHours").innerText = absoluteHours.toLocaleString();
 if(document.getElementById("totalMinutes")) document.getElementById("totalMinutes").innerText = absoluteMinutes.toLocaleString();
@@ -309,7 +442,6 @@ if(document.getElementById("totalSeconds")) document.getElementById("totalSecond
 if(document.getElementById("counter")) document.getElementById("counter").innerHTML = `${dStr} : ${hStr} : ${mStr} : ${sStr}`;
 }
 
-// Initializing real-time engine
 setInterval(updateTimer, 1000);
 updateTimer();
 </script>
