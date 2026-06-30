@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>To my Lotus Lilly ❤️</title>
+
+<link href="https://googleapis.com" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:black;
+color:white;
+font-family:Poppins;
+overflow-x:hidden;
+}
+
+.background{
+position:fixed;
+width:100%;
+height:100%;
+z-index:-2;
+}
+
+.photo{
+position:absolute;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+opacity:0;
+/* 48s loop splits into 6 seconds per image for all 8 pictures */
+animation:slides 48s infinite;
+}
+
+/* Photo backgrounds assigned to look for lowercase .jpeg extensions */
+.photo:nth-child(1){
+background-image:url("images/photo1.jpeg");
+animation-delay: 0s;
+}
+
+.photo:nth-child(2){
+background-image:url("images/photo2.jpeg");
+animation-delay: 6s;
+}
+
+.photo:nth-child(3){
+background-image:url("images/photo3.jpeg");
+animation-delay: 12s;
+}
+
+.photo:nth-child(4){
+background-image:url("images/photo4.jpeg");
+animation-delay: 18s;
+}
+
+.photo:nth-child(5){
+background-image:url("images/photo5.jpeg");
+animation-delay: 24s;
+}
+
+.photo:nth-child(6){
+background-image:url("images/photo6.jpeg");
+animation-delay: 30s;
+}
+
+.photo:nth-child(7){
+background-image:url("images/photo7.jpeg");
+animation-delay: 36s;
+}
+
+.photo:nth-child(8){
+background-image:url("images/photo8.jpeg");
+animation-delay: 42s;
+}
+
+@keyframes slides{
+0%{
+opacity:0;
+transform:scale(1.2);
+}
+4%, 16%{
+opacity:1;
+}
+20%{
+opacity:0;
+transform:scale(1);
+}
+100%{
+opacity:0;
+}
+}
+
+.overlay{
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.6);
+z-index:-1;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:80px 25px;
+}
+
+h1{
+font-family:"Great Vibes";
+font-size:80px;
+text-align:center;
+}
+
+.card{
+background:rgba(255,255,255,.15);
+padding:30px;
+border-radius:25px;
+margin:40px 0;
+backdrop-filter:blur(10px);
+line-height:2;
+white-space: pre-wrap;
+}
+
+button{
+background:#ff4f81;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:30px;
+cursor:pointer;
+}
+
+.controls{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+z-index: 10;
+}
+
+.heart{
+position:fixed;
+animation:fall 8s linear infinite;
+}
+
+@keyframes fall{
+from{
+transform:translateY(-100px);
+}
+to{
+transform:translateY(100vh);
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+<div class="photo"></div>
+<div class="photo"></div>
+<div class="photo"></div>
+<div class="photo"></div>
+<div class="photo"></div>
+<div class="photo"></div>
+<div class="photo"></div>
+<div class="photo"></div>
+</div>
+
+<div class="overlay"></div>
+
+<!-- Set up for lowercase .mp3 extension -->
+<audio id="music" loop>
+<source src="music/romantic.mp3">
+</audio>
+
+<div class="controls">
+<button onclick="playMusic()">
+❤️ Play Music
+</button>
+<button onclick="pauseMusic()">
+Pause
+</button>
+</div>
+
+<div class="container">
+<h1>To my Lotus Lilly ❤️</h1>
+
+<div class="card">
+<div id="letter"></div>
+</div>
+
+<div class="card">
+Forever and always ❤️
+</div>
+</div>
+
+<script>
+const message = `
+Life is short and seeing the shortness of it in effect I want to spend my time doing things that matter. One thing I’ll never regret is loving you. It’s something I wish to do for the rest of my days. I’ve told you this many times but I want to reiterate it sthandwa sam’, you make it do easy to love you. It’s something I don’t think about and something I do a kin to breathing. I feel completely myself when I’m with you. I feel no shame in being a soft boy making you blush and smile. I take pleasure in doing everything in my power to make you smile. Lerato I cannot remember a time when I didn’t love you. That’s foreign to me. You have blended beautifully into my life, completely and wholly. You are not the part of the furniture but the home in which I reside. It’s as if I fully experienced what God set aside to love a person when it comes to you. I understand what Adam felt when he opened his eyes, saw Eve and said “bone of my bone flesh of my flesh”. I understand what drove Jacob to work 7 years to get Rachel and another 7 once he had her. Likewise I’ll do whatever it takes, joyfully, to keep the one my heart bleeds for. I experience the sweetness of life everytime you speak and my heart skips a beat with every glance you give me. I am in awe of you. You are more than my dreams could conjure. You’re not real. You’re a unicorn from the imagination of the Father. I will do whatever it takes, by His will,to keep you. You deserve the world. You are worth more than gold. I know you don’t ask for much but I renew my commitment to doing that to the best of my ability. Marriage is not the final goal. The goal is to spend eternity with you with our father. I love you sthandwa. I loved you a year and six months ago. I love you today. I’ll love you for the rest of my days and eternity in paradise ♥️🌹♾️.
+`;
+
+let i=0;
+
+function type(){
+if(i < message.length){
+document.getElementById("letter").innerHTML += message.charAt(i);
+i++;
+setTimeout(type,75);
+}
+}
+
+type();
+
+function playMusic(){
+document.getElementById("music").play();
+}
+
+function pauseMusic(){
+document.getElementById("music").pause();
+}
+
+for(let i=0;i<50;i++){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize="20px";
+heart.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(heart);
+}
+</script>
+
+</body>
+</html>
